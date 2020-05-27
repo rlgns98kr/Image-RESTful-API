@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rest request page</title>
+	</head>
+	<body>
+		<div
+			style="
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				text-align: center;
+			"
+		>
+			<h1>REST REQUEST</h1>
+			<br /><br />
+			<input type="text" id="getNo" /><br /><br />
+			<button onclick="get()">이미지 보기(get)</button><br /><br /><br />
+
+			<input
+				type="file"
+				id="image"
+				value="파일 선택"
+				accept="image/*"
+			/><br /><br />
+			<button>이미지 업로드(post)</button><br /><br /><br />
+
+			<input type="text" id="putNo" /><br /><br />
+			<button>이미지 수정(put)</button><br /><br /><br />
+
+			<input type="text" id="deleteNo" /><br /><br />
+			<button>이미지 삭제(delete)</button>
+		</div>
+		<script>
+			var httpRequest = new XMLHttpRequest();
+			httpRequest.onreadystatechange = event;
+			function get(id) {
+				location.assign(
+					"http://localhost:8080/images/" +
+						document.getElementById("getNo").value
+				);
+			}
+			function post() {
+				httpRequest.open(
+					"post",
+					"http://localhost:8080/images/" +
+						document.getElementById("getNo").value,
+					false
+				);
+			}
+		</script>
+	</body>
+</html>
