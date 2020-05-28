@@ -8,6 +8,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 function checkfileexist(no) {
+	if (!fs.existsSync("./images")) fs.mkdirSync("./images");
 	return new Promise((resolve) => {
 		fs.readdir("./images", (error, file) => {
 			for (let value of file) {
