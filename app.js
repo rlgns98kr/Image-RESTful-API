@@ -36,7 +36,7 @@ app.get("/images/:no", async (req, res) => {
 	}
 });
 
-app.post("/images", (req, res) => {});
+app.post("/images", async (req, res) => {});
 
 app.put("/images/:no", async (req, res) => {
 	const no = req.params.no;
