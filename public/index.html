@@ -39,6 +39,7 @@
 	</div>
 	<script>
 		var httpRequest = new XMLHttpRequest();
+		var baseUrl = "http://localhost:8080";
 
 		function imagetobase64(file) {
 			return new Promise((resolve, reject) => {
@@ -52,14 +53,14 @@
 		function get() {
 			httpRequest.open(
 				"GET",
-				"http://localhost:8080/images/" + document.getElementById("getNo").value,
+				baseUrl + "/images/" + document.getElementById("getNo").value,
 				false
 			);
 			httpRequest.send();
 
 			if (httpRequest.status === 200)
 				location.href =
-					"http://localhost:8080/images/" + document.getElementById("getNo").value;
+					baseUrl + "/images/" + document.getElementById("getNo").value;
 			else alert(JSON.parse(httpRequest.response).message);
 		}
 
@@ -68,7 +69,7 @@
 			if (!file) alert('파일을 선택해 주세요!');
 			const image = await imagetobase64(file);
 
-			httpRequest.open("POST", "http://localhost:8080/images", false);
+			httpRequest.open("POST", baseUrl + "/images", false);
 			httpRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 			httpRequest.send(JSON.stringify({
 				no: document.getElementById("postNo").value,
@@ -77,10 +78,10 @@
 
 			if (httpRequest.status === 201) {
 				location.href =
-					"http://localhost:8080/images/" + document.getElementById("postNo").value;
+					baseUrl + "/images/" + document.getElementById("postNo").value;
 			} else {
 				alert(JSON.parse(httpRequest.response).message);
-				location.href = "http://localhost:8080";
+				location.href = baseUrl + "";
 			}
 		}
 		document.getElementById("postButton").onclick = post;
@@ -90,19 +91,18 @@
 			if (!file) alert('파일을 선택해 주세요!');
 			const image = await imagetobase64(file);
 
-			httpRequest.open("PUT", "http://localhost:8080/images/" + document.getElementById("putNo").value, false);
+			httpRequest.open("PUT", baseUrl + "/images/" + document.getElementById("putNo").value, false);
 			httpRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-			httpRequest.send({
+			httpRequest.send(JSON.stringify({
 				image,
-			});
+			}));
 
 			if (httpRequest.status === 201) {
 				location.href =
-					"http://localhost:8080/images/" + document.getElementById("postNo").value;
+					baseUrl + "/images/" + document.getElementById("putNo").value;
 			} else {
-				console.log(httpRequest.response);
 				alert(JSON.parse(httpRequest.response).message);
-				location.href = "http://localhost:8080";
+				location.href = baseUrl;
 			}
 		}
 		document.getElementById("putButton").onclick = put;
@@ -110,7 +110,7 @@
 		function delete_request() {
 			httpRequest.open(
 				"DELETE",
-				"http://localhost:8080/images/" + document.getElementById("deleteNo").value,
+				baseUrl + "/images/" + document.getElementById("deleteNo").value,
 				false
 			);
 			httpRequest.send();
@@ -122,7 +122,7 @@
 		function head_request() {
 			httpRequest.open(
 				"HEAD",
-				"http://localhost:8080/images/" + document.getElementById("headNo").value,
+				baseUrl + "/images/" + document.getElementById("headNo").value,
 				false
 			);
 			httpRequest.send();
@@ -137,7 +137,7 @@
 		function options() {
 			httpRequest.open(
 				"OPTIONS",
-				"http://localhost:8080/images/" + document.getElementById("optionsNo").value,
+				baseUrl + "/images/" + document.getElementById("optionsNo").value,
 				false
 			);
 			httpRequest.send();

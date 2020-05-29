@@ -1,5 +1,7 @@
+require("dotenv").config({ path: './.env' });
 const express = require("express");
 const app = express();
+
 
 const fs = require("fs");
 const path = require("path");
@@ -52,7 +54,7 @@ app.post("/images", async (req, res) => {
 		if (!filename) {
 			if (image) {
 				let file = req.body.image.match(/^data:([A-Za-z]+)\/([A-Za-z]+);base64,(.+)$/);
-				if (file.index === 0) {
+				if (file && file.index === 0) {
 					if (file[1] === "image") {
 						if (file.length === 4 && (file[2] === "jpeg" || file[2] === "gif" || file[2] === "png")) {
 							let data = new Buffer.from(file[3], "base64");
@@ -105,10 +107,10 @@ app.put("/images/:no", async (req, res) => {
 	const no = req.params.no;
 	const image = req.body.image;
 	if (no && /^[0-9]+$/.test(no)) {
-		const filename = await checkfileexist(no);
+		await checkfileexist(no);
 		if (image) {
 			let file = req.body.image.match(/^data:([A-Za-z]+)\/([A-Za-z]+);base64,(.+)$/);
-			if (file.index === 0) {
+			if (file && file.index === 0) {
 				if (file[1] === "image") {
 					if (file.length === 4 && (file[2] === "jpeg" || file[2] === "gif" || file[2] === "png")) {
 						let data = new Buffer.from(file[3], "base64");
@@ -210,6 +212,6 @@ app.options("/images", (req, res) => {
 	res.status(204).send();
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT, () => {
 	console.log("server start!");
 });
