@@ -37,7 +37,10 @@ app.get("/images/:no", async (req, res) => {
 	}
 });
 
-app.post("/images", async (req, res) => {});
+app.post("/images", async (req, res) => {
+	console.log(req);
+	res.send();
+});
 
 app.put("/images/:no", async (req, res) => {
 	const no = req.params.no;
