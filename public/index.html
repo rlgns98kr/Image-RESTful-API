@@ -65,34 +65,45 @@
 
 		async function post() {
 			const file = document.getElementById("postImage").files[0];
+			if (!file) alert('파일을 선택해 주세요!');
 			const image = await imagetobase64(file);
+
 			httpRequest.open("POST", "http://localhost:8080/images", false);
-			httpRequest.send({
+			httpRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			httpRequest.send(JSON.stringify({
 				no: document.getElementById("postNo").value,
-				type: file.type,
-				image: String(image),
-			});
+				image,
+			}));
 
 			if (httpRequest.status === 201) {
 				location.href =
 					"http://localhost:8080/images/" + document.getElementById("postNo").value;
-			} else alert(JSON.parse(httpRequest.response).message);
+			} else {
+				alert(JSON.parse(httpRequest.response).message);
+				location.href = "http://localhost:8080";
+			}
 		}
 		document.getElementById("postButton").onclick = post;
 
 		async function put() {
 			const file = document.getElementById("putImage").files[0];
+			if (!file) alert('파일을 선택해 주세요!');
 			const image = await imagetobase64(file);
-			httpRequest.open("PUT", "http://localhost:8080/images" + document.getElementById("putNo").value, false);
+
+			httpRequest.open("PUT", "http://localhost:8080/images/" + document.getElementById("putNo").value, false);
+			httpRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 			httpRequest.send({
-				type: file.type,
 				image,
 			});
 
 			if (httpRequest.status === 201) {
 				location.href =
 					"http://localhost:8080/images/" + document.getElementById("postNo").value;
-			} else alert(JSON.parse(httpRequest.response).message);
+			} else {
+				console.log(httpRequest.response);
+				alert(JSON.parse(httpRequest.response).message);
+				location.href = "http://localhost:8080";
+			}
 		}
 		document.getElementById("putButton").onclick = put;
 
@@ -120,7 +131,7 @@
 			const statusText = httpRequest.statusText;
 			const contentType = httpRequest.getResponseHeader("Content-Type");
 			const contentLength = httpRequest.getResponseHeader("Content-Length");
-			document.body.innerHTML = `HTTP/1.1 ${status} ${statusText}<br/>Content-Type : ${contentType}<br/>Content-Length : ${contentLength}`;
+			alert(`HTTP/1.1 ${status} ${statusText}\nContent-Type : ${contentType}\nContent-Length : ${contentLength}`);
 		}
 
 		function options() {
