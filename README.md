@@ -5,8 +5,8 @@
 
 ## How to Request
 
-GET, PUT, DELETE 요청의 경우 /images/:no의 URL로 요청을 보냅니다. POST 요청의 경우 /images의 URL로요
-청을 보냅니다. POST, PUT 요청의 경우 요청의 바디에 BASE64로 인코딩된 IMAGE를 포함해야 합니다.
+GET, PUT, DELETE 요청의 경우 /images/:no의 URL로 요청을 보냅니다. POST 요청의 경우 /images의 URL로
+요청을 보냅니다. POST, PUT 요청의 경우 요청의 바디에 BASE64로 인코딩된 IMAGE를 포함해야 합니다.
 
 -   요청 예시
 
