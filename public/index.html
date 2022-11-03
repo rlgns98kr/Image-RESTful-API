@@ -43,12 +43,6 @@
 
 			<input type="text" id="deleteNo" style="border-style: solid;" /><br /><br />
 			<button onclick="delete_request()">이미지 삭제(delete)</button><br /><br /><br />
-
-			<input type="text" id="headNo" style="border-style: solid;" /><br /><br />
-			<button onclick="head_request()">HEAD 요청</button><br /><br /><br />
-
-			<input type="text" id="optionsNo" style="border-style: solid;" /><br /><br />
-			<button onclick="options()">OPTIONS 요청</button>
 		</div>
 		<script>
 			var httpRequest = new XMLHttpRequest();
@@ -68,7 +62,7 @@
 
 				if (httpRequest.status === 200)
 					location.href = "/images/" + document.getElementById("getNo").value;
-				else alert(JSON.parse(httpRequest.response).message);
+				else alert(httpRequest.response);
 			}
 
 			async function post() {
@@ -87,7 +81,7 @@
 
 				if (httpRequest.status === 201) {
 					location.href = "/images/" + document.getElementById("postNo").value;
-				} else alert(JSON.parse(httpRequest.response).message);
+				} else alert(httpRequest.response);
 			}
 			document.getElementById("postButton").onclick = post;
 
@@ -106,7 +100,7 @@
 
 				if (httpRequest.status === 201) {
 					location.href = "/images/" + document.getElementById("putNo").value;
-				} else alert(JSON.parse(httpRequest.response).message);
+				} else alert(httpRequest.response);
 			}
 			document.getElementById("putButton").onclick = put;
 
@@ -119,35 +113,7 @@
 				httpRequest.send();
 
 				if (httpRequest.status === 204) alert("삭제되었습니다!");
-				else alert(JSON.parse(httpRequest.response).message);
-			}
-
-			function head_request() {
-				httpRequest.open(
-					"HEAD",
-					"/images/" + document.getElementById("headNo").value,
-					false
-				);
-				httpRequest.send();
-
-				const status = httpRequest.status;
-				const statusText = httpRequest.statusText;
-				const contentType = httpRequest.getResponseHeader("Content-Type");
-				const contentLength = httpRequest.getResponseHeader("Content-Length");
-				alert(
-					`HTTP/1.1 ${status} ${statusText}\nContent-Type : ${contentType}\nContent-Length : ${contentLength}`
-				);
-			}
-
-			function options() {
-				httpRequest.open(
-					"OPTIONS",
-					"/images/" + document.getElementById("optionsNo").value,
-					false
-				);
-				httpRequest.send();
-
-				alert(`Allow : ${httpRequest.getResponseHeader("Allow")}`);
+				else alert(httpRequest.response);
 			}
 		</script>
 	</body>
